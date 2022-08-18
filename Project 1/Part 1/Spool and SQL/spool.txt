@@ -1,0 +1,21 @@
+mysql> tee sql.txt
+mysql> 
+mysql> use paj1810
+Database changed
+mysql> source /home/p/pa/paj1810/QUERIES.SQL
+Database changed
+Query OK, 0 rows affected (0.05 sec)
+
+Query OK, 0 rows affected (0.06 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+Query OK, 0 rows affected (0.09 sec)
+
+Query OK, 0 rows affected (0.11 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> NOTEE
