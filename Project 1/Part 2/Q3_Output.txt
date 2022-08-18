@@ -1,0 +1,82 @@
+mysql> use paj1810
+Database changed
+mysql> SELECT D.NAME, D.ADDR FROM (select B.NAME, BB.ADDR,MAX(L.AMOUNT) AS MAX_LOAN FROM BANK AS B, BANK_BRANCH AS BB, LOAN AS L WHERE L.BNO = BB.BRANCHNO AND B.CODE = BB.BCODE group by BB.BRANCHNO order by MAX_LOAN desc LIMIT 1) AS D;
++--------------+------------------+
+| NAME         | ADDR             |
++--------------+------------------+
+| PNC Bank     | Arlington, Texas |
++--------------+------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT C.NAME, C.ADDR
+FROM (
+	SELECT A.BALANCE - L.AMOUNT AS BALANCE, C.NAME, C.ADDR
+	FROM ACCOUNT AS A
+	JOIN ACCOUNT_CUSTOMER AS AC
+		ON A.ACCTNO = AC.ACCTNO
+		JOIN CUSTOMER AS C
+			ON C.SSN = AC.SSN
+			JOIN LOAN_CUSTOMER AS LC
+				ON LC.SSN = AC.SSN
+				JOIN LOAN AS L
+					ON L.LOANNO = LC.LOANNO
+					) AS C 
+					ORDER BY C.BALANCE DESC
+					LIMIT 1;
+
++------------+------------------+
+| NAME       | ADDR             |
++------------+------------------+
+| BILLIARD   | Irving, Texas    |
++------------+------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT B.NAME, BB.ADDR FROM BANK AS B JOIN BANK_BRANCH AS BB ON B.CODE = BB.BCODE, (SELECT BNO, COUNT(BNO) as loan_count FROM LOAN group by BNO order by loan_count desc limit 10) AS K, (SELECT BNO, COUNT(BNO) as account_count FROM ACCOUNT group by BNO order by account_count desc LIMIT 10) AS L where BB.BRANCHNO = L.BNO and K.BNO = BB.BRANCHNO; 
++---------------------+---------------+
+| NAME                | ADDR          |
++---------------------+---------------+
+| KOTAK BANK          | Dallas, Texas |
++---------------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT NAME, ADDR, SUM(A.BALANCE) - SUM(l.AMOUNT) AS Calculation FROM BANK B LEFT OUTER JOIN ACCOUNT A ON B.CODE = A.BCODE LEFT OUTER JOIN LOAN l ON B.CODE = l.BCODE GROUP BY NAME, ADDR ORDER BY CALCULATION DESC;
++----------------------+----------------------+
+| NAME                 | ADDR                 |
++----------------------+----------------------+
+| KOTAK BANK           | Seattle, Washington  |
+| WELL FARGO           | Irving, Texas        |
+| Bank of America      | Arlington, Texas     |
+| PNC Bank             | Redmount, Texas      |
+| STATE BANK INDIA     | Lynnwood, Washington |
+| BANK OF INDIA        | Austin, Texas        |
+| PUNJAB  BANK         | Dallas, Texas        |
+| AXIS BANK            | Seattle, Washington  |
+| Goldman Sachs        | Arlington, Texas     |
+| UCO BANK             | Lynnwood, Washington |
+| UNO BANK             | Dallas, Texas        |   
++----------------------+----------------------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT q1.total_branch,q2.account_surplus,q3.CODE,q3.NAME FROM (SELECT COUNT(BRANCHNO) as total_branch,BCODE  FROM BANK_BRANCH bb GROUP BY bb.BCODE ORDER BY total_branch ASC) as q1,(SELECT COUNT(ACCTNO) as ac,BNO,SUM(BALANCE) as account_surplus,BCODE  FROM ACCOUNT a GROUP BY a.BNO,a.BCODE) as q2,(SELECT b.CODE,b.NAME  from BANK b) as q3 WHERE q1.BCODE = q2.BCODE AND q2.BCODE = q3.CODE AND q3.CODE = q1.BCODE ORDER BY q2.account_surplus DESC; 
++--------------+-----------------+------+------------------+
+| total_branch | account_surplus | CODE | NAME             |
++--------------+-----------------+------+------------------+
+|            1 |           96000 | KOT  | KOTAK BANK       |
+|            1 |           82000 | WFG  | WELL FARGO       |
+|            1 |           74300 | PNC  | PNC Bank         |
+|            1 |           44000 | BOA  | Bank of America  |
+|            1 |           30000 | SBI  | STATE BANK INDIA |
+|            1 |           23000 | PNB  | PUNJAB  BANK     |
+|            1 |           12000 | BOI  | BANK OF INDIA    |
++--------------+-----------------+------+------------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT B.NAME from BANK as B, (select BCODE, COUNT(BCODE) as branches FROM LOAN WHERE TYPE = 'Home Loan' group by BCODE order by branches) as BR where B.CODE = BR.BCODE;
++----------------+
+| NAME           |
++----------------+
+| PUNJAB  BANK   |
++---- -----------+
+1 row in set (0.00 sec)
+
+mysql> notee

@@ -1,0 +1,17 @@
+mysql> tee sql.txt
+mysql> 
+mysql> use paj1810
+Database changed
+mysql> source /home/p/pa/paj1810/QUERIES.SQL
+Database changed
+
+mysql> INSERT INTO BANK VALUES ('JPC', 'CHASE', 'Arlington Texas');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INTO BANK_BRANCH VALUES ('AXI', '8', 'Seattle, Washington');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INTO ACCOUNT VALUES ('194789','77000','Checking','UNO','2');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> NOTEE

@@ -1,0 +1,20 @@
+mysql> tee sql.txt
+mysql> 
+mysql> use paj1810
+Database changed
+mysql> source /home/p/pa/paj1810/QUERIES.SQL
+Database changed
+
+//The primary key cannot be null (ENTITY INTEGRITY).
+mysql> INSERT INTO BANK VALUES (NULL, 'CHASE','Arlington Texas');
+ERROR 1048 (23000): Column 'CODE' cannot be null
+
+//Primary key cannot have duplicate values (KEY INTEGRITY).
+mysql> INSERT INTO BANK_BRANCH VALUES ('AXI', '7', 'Seattle, Washington');
+ERROR 1062 (23000): Duplicate entry '7' for key 'BANK_BRANCH.BRANCHNO'
+
+//Cannot delete parent record as child is dependent on it (REFERENTIAL INTEGRITY).
+mysql> INSERT INTO LOAN_CUSTOMER VALUES ('530839324', '108');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`paj1810`.`LOAN_CUSTOMER`, CONSTRAINT `LOAN_CUSTOMER_ibfk_1` FOREIGN KEY (`LOANNO`) REFERENCES `LOAN` (`LOANNO`))
+
+mysql> NOTEE

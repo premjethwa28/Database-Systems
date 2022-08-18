@@ -1,0 +1,11 @@
+4. Execute 3 more Insert commands that attempt to insert 3 more records, such that the records violate the integrity constraints. Make each of the 3 records violate a different 
+   type of integrity constraint. 
+   Capture your commands in spool files for turning in.
+
+QUERIES: 
+
+   INSERT INTO BANK VALUES (NULL, 'CHASE','Arlington Texas');
+
+   INSERT INTO BANK_BRANCH VALUES ('AXI', '7', 'Seattle, Washington');
+
+   INSERT INTO LOAN_CUSTOMER VALUES ('530839324', '108');

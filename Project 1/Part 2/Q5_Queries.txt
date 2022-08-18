@@ -1,0 +1,4 @@
+5. Execute a SQL command to Delete a record that violates a referential integrity constraint. 
+   Capture your command in a spool file for turning in.
+
+QUERY : DELETE FROM BANK WHERE CODE='BOI';

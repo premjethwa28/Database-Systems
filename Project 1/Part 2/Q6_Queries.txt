@@ -1,0 +1,12 @@
+6. Repeat 5 but Insert three new records that do not violate any integrity constraints. 
+   Capture your commands in spool files for turning in.
+
+QUERIES : 
+
+  INSERT INTO BANK VALUES ('JPC', 'CHASE', 'Arlington Texas');
+
+  INSERT INTO BANK_BRANCH VALUES ('AXI', '8', 'Seattle, Washington');
+
+  INSERT INTO ACCOUNT VALUES ('194789','77000','Checking','UNO','2');
+
+

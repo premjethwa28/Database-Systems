@@ -1,0 +1,12 @@
+//Cannot delete parent record as child is dependent on it.
+
+mysql> tee sql.txt
+mysql> 
+mysql> use paj1810
+Database changed
+
+mysql> source /home/p/pa/paj1810/QUERIES.SQL
+Database changed
+mysql> DELETE FROM BANK WHERE CODE='BOI';
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`paj1810`.`ACCOUNT`, CONSTRAINT `ACCOUNT_ON_ibfk_2` FOREIGN KEY (`BCODE`) REFERENCES `BANK` (`CODE`))
+mysql> NOTEE
